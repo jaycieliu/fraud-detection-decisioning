@@ -38,7 +38,7 @@ Then run:
 
 ```bash
 python -m src.fraud.prepare_ieee
-
+```
 ---
 
 ## Baseline model (numeric-only)
