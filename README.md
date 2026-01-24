@@ -99,16 +99,16 @@ Figures (in repo):
 ## Key plots
 
 ### PR Curve (Validation)
-![PR Curve](reports/figures/pr_curve_valid.png)
+<img src="reports/figures/pr_curve_valid.png" width="650">
 
 ### Score drift over time (Test)
-![Score Drift](reports/figures/score_drift_test.png)
+<img src="reports/figures/score_drift_test.png" width="650">
 
 ### Fraud rate over time (Test)
-![Fraud Rate Drift](reports/figures/fraud_rate_over_time_test.png)
+<img src="reports/figures/fraud_rate_over_time_test.png" width="650">
 
 ### PSI over time (Test)
-![PSI Drift](reports/figures/psi_score_drift_test.png)
+<img src="reports/figures/psi_score_drift_test.png" width="650">
 
 ---
 
