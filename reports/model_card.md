@@ -55,11 +55,6 @@ Metrics reported on validation + test:
   - Valid: precision **0.317**, recall **0.688**
   - Test:  precision **0.243**, recall **0.598**
 
-### PR Curve (Validation)
-<p align="center">
-  <img src="figures/pr_curve_valid.png" width="650">
-</p>
-
 Interpretation:
 - Even at K=10,000, precision is several times higher than the base rate (strong lift).
 
