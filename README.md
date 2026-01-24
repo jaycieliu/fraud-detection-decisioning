@@ -39,13 +39,6 @@ Then run:
 ```bash
 python -m src.fraud.prepare_ieee
 
-### Quick rule to remember
-- Code block starts with: ```  
-- Code block must end with: ```  
-If you forget the ending one → your whole README “becomes code”.
-
-If you want, paste the few lines around “Then run:” here and I’ll tell you exactly where the missing ``` is.
-
 ---
 
 ## Baseline model (numeric-only)
