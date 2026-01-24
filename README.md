@@ -71,9 +71,9 @@ Why baseline first: ship a strong simple model before complex encoding.
   - Test:  precision **0.243**, recall **0.598**
 
 ## Key takeaways (so what?)
-- **Drift is real:** PR-AUC drops on the future test slice (0.572 → 0.462), which is expected under time-based splits.
-- **Ranking still works:** Top-K precision remains strong (e.g., Precision@1000 ≈ 0.90 on test), meaning fraud is concentrated near the top of the score ranking—useful for triage.
-- **Capacity is a product decision:** Increasing K trades precision for recall (K=1,000 vs 10,000). Choose K based on review/step-up capacity and the cost of false positives vs missed fraud.
+- **Drift is real:** PR-AUC drops on the future test slice (0.572 → 0.462), which is consistent under time-based splits.
+- **Ranking still works:** Top-K precision remains strong (e.g., Precision@1000 ≈ 0.90 on test,~26× lift vs 3.44% base rate), meaning fraud is concentrated near the top of the score ranking—useful for triage.
+- **Capacity drives thresholds:** K=1,000 vs 10,000 trades precision for recall; choose K based on review bandwidth + step-up cost.
 
 ---
 
