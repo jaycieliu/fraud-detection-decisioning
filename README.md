@@ -32,13 +32,34 @@ We care about:
 - `train_transaction.csv`
 - `train_identity.csv`
 - `test_transaction.csv`
-- `test_identity.csv`
+- `test_identity.csv`Key point: there must be a **closing triple backtick** after the command.
+
+### 3) Preview tab
+If fixed, your headings like **Baseline model** and **Results** will no longer be inside the gray code box.
+
+### 4) Commit changes
+Message: `Fix README code block formatting`
+
+---
+
+### Quick rule to remember
+- Code block starts with: ```  
+- Code block must end with: ```  
+If you forget the ending one → your whole README “becomes code”.
+
+If you want, paste the few lines around “Then run:” here and I’ll tell you exactly where the missing ``` is.
 
 Then run:
 
 ```bash
 python -m src.fraud.prepare_ieee
 
+### Quick rule to remember
+- Code block starts with: ```  
+- Code block must end with: ```  
+If you forget the ending one → your whole README “becomes code”.
+
+If you want, paste the few lines around “Then run:” here and I’ll tell you exactly where the missing ``` is.
 
 ---
 
