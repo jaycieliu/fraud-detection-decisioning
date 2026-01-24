@@ -55,13 +55,14 @@ Metrics reported on validation + test:
   - Valid: precision **0.317**, recall **0.688**
   - Test:  precision **0.243**, recall **0.598**
 
-Interpretation:
-- Even at K=10,000, precision is several times higher than the base rate (strong lift).
-
+## Key takeaways
+- **Drift exists:** PR-AUC decreases on the future test slice (0.572 → 0.462), but top-K precision remains strong, indicating fraud is still concentrated near the top ranks.
+- **Capacity tradeoff:** K controls precision vs recall (K=1000: high precision, lower recall; K=10000: higher recall, lower precision). Choose K based on review/step-up capacity and cost.
+- **Stable operations:** Rank-based decisioning is more robust than fixed thresholds under score drift because it keeps queue volume stable over time.
 ---
 
 ## 6) Decision policy (capacity-locked ranking)
-A rank-based policy is used to keep action volumes stable over time (prevents queue drift from score drift).
+Because risk score distribution shifts over time, fixed probability thresholds can cause queue volume drift; rank-based (capacity-locked) policies keep workloads stable.
 
 Example:
 - Top **K_decline** → decline
@@ -96,6 +97,9 @@ The following monitoring artifacts are produced to detect drift:
 <p align="center">
   <img src="figures/psi_score_drift_test.png" width="650">
 </p>
+
+Conclusion:
+- PSI indicates small score-distribution drift (max 0.067), while fraud rate and mean score vary across time—suggesting non-stationary prevalence rather than a complete model breakdown.
 ---
 
 ## 8) Limitations & risks
