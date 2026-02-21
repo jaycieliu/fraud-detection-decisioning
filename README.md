@@ -23,7 +23,7 @@ That is why this project emphasizes:
 - **Capacity-locked rank policy**
 - **Drift / PSI monitoring**
   
-## Quick links：
+## Quick links
 - [Model card](reports/model_card.md)
 - [Metrics summary](reports/metrics_summary.json)
 - [Notebook](notebooks/01_eda.ipynb)
