@@ -102,7 +102,7 @@ This project demonstrates how fraud analytics supports **operational decision-ma
 
 - **Languages:** Python
 - **Libraries:** pandas, NumPy, scikit-learn, matplotlib *(add seaborn/xgboost if used)*
-- **Environment:** Jupyter Notebook / VS Code *(update to match your setup)*
+- **Environment:** Jupyter Notebook 
 
 ## Repository Structure
 ```text
