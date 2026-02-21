@@ -105,7 +105,7 @@ These artifacts are designed to show not only model performance, but also **deci
 ## Tech Stack
 
 - **Languages:** Python
-- **Libraries:** pandas, NumPy, scikit-learn, matplotlib *(add seaborn/xgboost if used)*
+- **Libraries:** pandas, NumPy, scikit-learn, matplotlib 
 - **Environment:** Jupyter Notebook / VS Code
   
 ---
