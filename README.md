@@ -1,110 +1,95 @@
-# Fraud Detection & Decisioning Pipeline
+# Fraud Detection & Decisioning Pipeline (IEEE-CIS)
 
-An end-to-end fraud analytics project that combines **fraud risk modeling** with **business decisioning logic** to support operational actions such as **approve / manual review / decline**.
+An end-to-end fraud risk workflow built on the IEEE-CIS dataset with a focus on **real fraud operations**:  
+**time-aware evaluation**, **ranking-based performance**, **capacity-aware decisioning**, and **monitoring artifacts** (drift / PSI).
+
+This project treats fraud modeling as a **triage problem** (who to decline / review / step-up / approve under limited capacity), not just a binary classification exercise.
 
 ---
 
-## Project Overview
+## Why this project matters
 
-Fraud detection is not only a machine learning classification problem — it is also a **business decision problem**.  
-A useful fraud system must balance:
+Fraud is rare, so standard accuracy can look good while still failing in practice.
 
-- **Fraud capture** (catching risky transactions)
-- **Customer experience** (avoiding unnecessary false alarms)
-- **Operational capacity** (prioritizing limited manual review resources)
+What matters operationally is:
 
-This project builds a fraud detection pipeline and extends it into a **decisioning framework** that translates model scores into practical actions.
+- **How well the model ranks risky transactions**
+- **How much fraud is captured in the top-K queue**
+- **How decisions stay stable when score distributions shift over time**
 
+That is why this project emphasizes:
+- **PR-AUC**
+- **Precision@K / Recall@K**
+- **Capacity-locked rank policy**
+- **Drift / PSI monitoring**
+  
 ## Quick links：
 - [Model card](reports/model_card.md)
 - [Metrics summary](reports/metrics_summary.json)
 - [Notebook](notebooks/01_eda.ipynb)
 
-## Objectives
-
-- Build a fraud risk classification workflow using transaction data
-- Handle **class imbalance** and evaluate beyond accuracy
-- Compare model performance and threshold tradeoffs
-- Design a simple decision policy:
-  - **Approve** (low risk)
-  - **Review** (medium risk)
-  - **Decline** (high risk)
+---
 
 ## Dataset
 
-- **Source:** IEEE-CIS Fraud Detection (Kaggle) *(update if different)*
-- **Granularity:** Transaction-level observations
-- **Target:** Fraud vs non-fraud
-- **Challenge:** Highly imbalanced classes (fraud is rare)
+- **Source:** IEEE-CIS Fraud Detection (Kaggle)
+- **Core tables:** transaction + identity
+- **Repo note:** raw Kaggle files are kept **local only** (not tracked)
 
-> Some fields in the dataset are anonymized, so feature interpretation may rely on proxy reasoning.
+> The repo includes preparation code and outputs/artifacts, but not redistributed Kaggle source files.
 
-## Methodology
+---
 
-### 1. Data Preparation
-- Loaded and cleaned transaction data
-- Checked missing values and variable types
-- Prepared train/validation splits
-- Removed or flagged leakage-prone variables (if applicable)
+## What this repo does
 
-### 2. Exploratory Data Analysis (EDA)
-- Examined fraud class distribution
-- Reviewed feature patterns, outliers, and missingness
-- Explored variables with stronger fraud signal
+### 1) Data preparation
+- Merges IEEE transaction + identity tables
+- Exports analysis-ready parquet files
+- Keeps raw files local for reproducibility and clean version control
 
-### 3. Feature Engineering
-- Encoded categorical variables
-- Built model-ready features *(replace with your specific feature engineering steps)*
-- Standardized/scaled variables where needed
+### 2) Time-aware EDA
+Using `notebooks/01_eda.ipynb`, the analysis is framed around **future performance**, not random-split performance:
+- fraud base rate / class imbalance
+- distribution behavior over time bins
+- train/validation/test differences (drift-aware framing)
 
-### 4. Modeling
-- Built a baseline model
-- Trained and compared classification models *(keep only those you used, e.g., Logistic Regression / Random Forest / XGBoost)*
-- Generated fraud risk probabilities for threshold-based decisioning
+### 3) Ranking-focused evaluation
+The model is evaluated as a **ranking system** under review constraints:
+- **PR-AUC** for imbalanced discrimination quality
+- **Precision@K / Recall@K** for top-of-queue usefulness
+- validation vs future test performance comparison
 
-### 5. Evaluation
-Because of class imbalance, the project emphasizes:
-- **Precision**
-- **Recall**
-- **F1-score**
-- **ROC-AUC / PR-AUC** *(use what you computed)*
-- **Confusion matrix**
-- **Threshold sensitivity analysis**
+### 4) Capacity-aware decisioning
+Model scores are converted into operational actions, such as:
+- **Decline**
+- **Manual review**
+- **Step-up / challenge**
+- **Approve**
 
-### 6. Decisioning Framework
-Converted model outputs into business actions:
-- **Low score → Approve**
-- **Mid score → Manual Review**
-- **High score → Decline / Block**
+The repo includes a **rank-based, capacity-locked policy**, which is more stable than fixed score thresholds when score distributions drift.
 
-This makes the project more realistic than a binary “fraud / not fraud” prediction output.
+### 5) Monitoring artifacts
+Post-model outputs support deployment-style thinking:
+- **PSI by time bin**
+- drift summaries / plots
+- sample decision outputs
+- model card documentation
 
-## Key Results
+---
 
-> Replace the bullets below with your actual metrics and findings.
+## Key outputs in this repo
 
-- Improved fraud detection performance over baseline under class imbalance.
-- Threshold tuning helped balance **fraud capture** and **false positive control**.
-- A three-tier decisioning policy provided a more practical operational workflow than a single cutoff.
-- Confusion-matrix analysis clarified tradeoffs between recall and customer friction.
+- **Model metrics summary** (ranking performance, top-K quality)
+- **Sample decision tables** (score-based and rank-policy variants)
+- **PSI by time bin** (distribution shift monitoring)
+- **Model card** (assumptions, limitations, intended usage)
 
-## Business Interpretation
+These artifacts are designed to show not only model performance, but also **decisioning behavior and monitoring readiness**.
 
-This project demonstrates how fraud analytics supports **operational decision-making**, not just model accuracy.
+---
 
-### Recommendations
-- Use **risk-score thresholds** instead of a default 0.50 cutoff
-- Align review thresholds with **manual review capacity**
-- Track performance by action bucket (approve/review/decline)
-- Monitor model drift as fraud behavior changes over time
+## Repo structure
 
-## Tech Stack
-
-- **Languages:** Python
-- **Libraries:** pandas, NumPy, scikit-learn, matplotlib *(add seaborn/xgboost if used)*
-- **Environment:** Jupyter Notebook 
-
-## Repository Structure
 ```text
 fraud-detection-decisioning/
 ├── README.md
@@ -124,3 +109,4 @@ fraud-detection-decisioning/
 │   ├── sample_decisions_test.csv        # example decisions from score-based policy
 │   ├── sample_decisions_test_rank_policy.csv  # capacity-locked rank-based decisions
 │   └── model_card.md                    # model assumptions, metrics, limitations, usage notes
+
