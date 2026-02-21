@@ -63,7 +63,7 @@ The model is evaluated as a **ranking system** under review constraints:
 Model scores are converted into operational actions, such as:
 - **Decline**
 - **Manual review**
-- **Step-up / challenge**
+- **Step-up**
 - **Approve**
 
 The repo includes a **rank-based, capacity-locked policy**, which is more stable than fixed score thresholds when score distributions drift.
